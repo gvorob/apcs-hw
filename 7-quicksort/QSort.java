@@ -1,20 +1,33 @@
 import java.util.Random;
-public class Select{
-	int swap;
+public class QSort{
+	static int swap;
 	static Random r;
 	
 	public static void main(String[] args){
-		int[] data = new int[] { 6,1,7,4,2,5,3,9 };
-		System.out.println(sort(data,0,data.length));
 		r = new Random();
+		int[] data = new int[Integer.parseInt(args[0])];
+		for(int i = 0; i < data.length; i++){
+			data[i] = r.nextInt(10000);
+		}
+		//print(data);
+		long time = System.currentTimeMillis();
+		sort(data,0,data.length);
+		System.out.println(System.currentTimeMillis() - time);
+		//print(data);
 	}
 
 	
-	public static int sort(int[] data, int low, int high){//high exclusive
-		print(data);
+	public static void sort(int[] data, int low, int high){//high exclusive
+		if(high - low <= 1) return;
+
 		int p = data[low + r.nextInt(high - low)];
-		int nfft = high;//Next free from top
-		for(int i = low; i < high; i++){
+
+		//print(data);
+		//System.out.println(low + " " + high + " p:" + p + "\n");
+		int nfft = high - 1;//Next free from top
+		for(int i = low; i < high && i < nfft; i++){
+			//System.out.println(i + "  " + nfft);
+			//print(data);
 			if(data[i] > p){
 				while(true){
 					if(nfft == i){
@@ -23,6 +36,7 @@ public class Select{
 					}
 					if(data[nfft] <= p){
 						swap(data,i,nfft);
+						break;
 					}
 					else{
 						nfft--;
@@ -31,36 +45,25 @@ public class Select{
 			}
 			//print(newData);
 		}
+
+		//System.out.println("finished swapping");
+
 		int numPivots = 0;
 		int i;
-		for(i = low; data[i] <= p && i < high; i++){
+		for(i = low; i < high && data[i] <= p; i++){
+			//print(data);
 			if(data[i] == p){
 				numPivots++;
 			}
-			else{
-				data[i - numPivots] = data[i]
+			else if(numPivots > 0){
+ 				data[i - numPivots] = data[i];
 				data[i] = p;
+			}
 		}
-		for(int i  = 0; i < numEqual;i++){
-			newData[plow] = data[p];
-			plow++;
-		}
-		if(plow == k) return data[p];
+		
+		sort(data,low, i - numPivots);
+		sort(data,i,high);
 	
-		if(plow > k){
-			int[] temp = new int[plow - 1];
-			for(int i = 0; i < temp.length;i++){
-				temp[i] = newData[i];
-			}
-			return quickselect(temp,k); 
-		}
-		else{
-			int[] temp = new int[data.length - phigh - 1];
-			for(int i = 0; i < temp.length;i++){
-				temp[i] = newData[plow + i];
-			}
-			return quickselect(temp,k - plow); 
-		}
 	}
 
 	public static void swap(int[] data, int a, int b){
