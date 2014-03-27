@@ -1,6 +1,6 @@
-public class MyLinkedList{
-	private Node start;
-	private Node end;
+public class MyLinkedList implements Iterable{
+	private Node<String> start;
+	private Node<String> end;
 	private int length;
 
 	public static void main(String[] args){
@@ -104,6 +104,10 @@ public class MyLinkedList{
 	}
 
 	public int length(){return length;}
+
+	public Iterator<String> iterator(){
+		return new LLIterator<String>(start);
+	}
 
 	public static void print(String s){System.out.println(s);}
 
