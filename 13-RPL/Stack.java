@@ -1,30 +1,11 @@
 public class Stack{
 
-	private String[] data;
+	private double[] data;
 	private int top;
 
-	public static void main(String[] args){
-		Stack asdf = new Stack();
-		asdf.push("1");
-		asdf.push("2");
-		asdf.push("3");
-		asdf.push("4");
-		System.out.println(asdf);
-		System.out.println(asdf.pop());
-		asdf.push("5");
-		System.out.println(asdf);
-		System.out.println(asdf.pop());
-		System.out.println(asdf.peek());
-		System.out.println(asdf.pop());
-		System.out.println(asdf.pop());
-		System.out.println(asdf.pop());
-		System.out.println(asdf.pop());
-		
-		
-	}
 
 	public Stack(){
-		data = new String[10];
+		data = new double[10];
 		top = -1;
 	}
 
@@ -32,25 +13,25 @@ public class Stack{
 
 	public int size(){return top + 1;}
 	
-	public void push(String n){
+	public void push(double n){
 		top++;
 		if(top == data.length) grow();
 		data[top] = n;
 	}
 
-	public String pop(){
-		if(isEmpty()) return null;
+	public double pop() throws Exception{
+		if(isEmpty()) throw new Exception();
 		top--;
 		return data[top + 1];
 	}	
 
-	public String peek(){
-		if(isEmpty()) return null;
+	public double peek() throws Exception{
+		if(isEmpty()) throw new Exception();
 		return data[top];
 	}
 
 	private void grow(){
-		String[] temp = new String[data.length * 2];
+		double[] temp = new double[data.length * 2];
 		for(int i = 0; i < data.length; i++){
 			temp[i] = data[i];
 		}

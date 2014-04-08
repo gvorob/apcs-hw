@@ -7,13 +7,12 @@ public class RPL{
 			System.out.println("gimme a string");
 		else if(args.length == 1){
 			RPL r = new RPL(false);
-			r.load(args[0]);
-			System.out.println(r.solve());
+			r.solve(args[0]);
+			System.out.println(r.stack);
 		}
 		else if(args.length == 2){
 			RPL r = new RPL(true);
-			r.load(args[0]);
-			System.out.println(r.solve());
+			r.solve(args[0]);
 		}
 	}
 	
@@ -22,20 +21,67 @@ public class RPL{
 		loud = l;
 	}
 
-	public void load(String in){
+	public void solve(String in){
 		String[] ins = in.split(" ");
 		for(String each : ins){
-			stack.push(each);
+			operate(each);
 		}
 		if(loud)System.out.println(stack);
 	}
 
-	public int doOne(){//returns an int if its finished
-		String temp = stack.pop();
-		if(loud)System.out.println(temp);
+	public void operate(String in){//returns an int if its finished
+		if(loud)System.out.println(in);
+		if(in.equals("+"))
+			add();
+		else if(in.equals("-"))
+			subt();
+		else if(in.equals("*"))
+			mult();
+		else if(in.equals("/"))
+			div();
+		else
+			try{
+				stack.push(Double.parseDouble(in));
+			}
+			catch(NumberFormatException e){
+				System.out.println("invalid input \"" + in + "\"");
+			}
+		if(loud)System.out.println(stack);
+		if(loud)System.out.println("-----");
+
 	}
 
-	public void solve(){
-		
+	public void add(){
+		try{
+			stack.push(stack.pop() + stack.pop());
+		}catch (Exception e){
+			System.out.println("not enough elements in stack");
+		}
+	}
+
+	public void subt(){
+		try{
+			stack.push(stack.pop() - stack.pop());
+		}catch (Exception e){
+			System.out.println("not enough elements in stack");
+		}
+	}
+
+	public void mult(){
+		try{
+			stack.push(stack.pop() * stack.pop());
+		}catch (Exception e){
+			System.out.println("not enough elements in stack");
+		}
+	}
+
+	public void div(){
+		try{
+			stack.push(stack.pop() / stack.pop());
+		}catch (Exception e){
+			System.out.println("not enough elements in stack");
+		}
+	}
+
 
 }
