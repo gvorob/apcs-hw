@@ -3,13 +3,16 @@ public class Node{
 	public Node left, right;
 
 	public static void main(String[] args){
-		Node root = new Node(3);
-		root.left = new Node(1);
-		root.left.right = new Node(2);
-		root.right = new Node(4);
+		Node root = new Node(1);
+		root.binInsert(5);
+		root.binInsert(4);
+		root.binInsert(2);
+		root.binInsert(3);
+		root.binInsert(6);
 		System.out.println(root.height());
 		System.out.println(root.find(1) == null);
 		System.out.println(root.binSearch(2) == null);
+		System.out.println(root);
 
 
 	}
@@ -43,8 +46,35 @@ public class Node{
 	}
 
 	public String toString(){
-		return null;	
+		String l = "";
+		String r = "";
+		if(left != null) l = left.toString();
+		if(right != null) r = right.toString();
+		return "(" + data + " " + left + " " + right + ")";
 	}	
+
+
+	public void binInsert(int n){
+		if(data == n)
+			return;//ERROR
+		if(n < data){
+			if(left == null){
+				left = new Node(n);
+			}
+			else{
+				left.binInsert(n);
+			}
+		}
+		else{
+			if(right == null){
+				right = new Node(n);
+			}
+			else{
+				right.binInsert(n);
+			}
+		}
+				
+	}
 	
 	public Node binSearch(int n){
 		if(data == n)
