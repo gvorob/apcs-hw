@@ -3,16 +3,14 @@ public class Node{
 	public Node left, right;
 
 	public static void main(String[] args){
-		Node root = new Node(1);
-		root.left = new Node(2);
-		root.left.right = new Node(3);
+		Node root = new Node(3);
+		root.left = new Node(1);
+		root.left.right = new Node(2);
 		root.right = new Node(4);
 		System.out.println(root.height());
 		System.out.println(root.find(1) == null);
-		System.out.println(root.find(2) == null);
-		System.out.println(root.find(3) == null);
-		System.out.println(root.find(4) == null);
-		System.out.println(root.find(5) == null);
+		System.out.println(root.binSearch(2) == null);
+
 
 	}
 
@@ -47,4 +45,19 @@ public class Node{
 	public String toString(){
 		return null;	
 	}	
+	
+	public Node binSearch(int n){
+		if(data == n)
+			return this;
+		if(n > data){
+			if(right != null){
+				return right.binSearch(n);}
+		}
+		else{
+			if(left != null){
+				return left.binSearch(n);}
+		}
+		return null;
+	}
+		
 }
