@@ -94,7 +94,11 @@ public class Tree{
 		System.out.println(t.height());
 		System.out.println(t.find(1) == null);
 		System.out.println(t.search(2) == null);
-		System.out.println(t.root);
+		System.out.println(t);
+		t.delete(t.search(3));
+		System.out.println(t);
+		t.delete(t.search(4));
+		System.out.println(t);
 
 
 	}
@@ -107,25 +111,55 @@ public class Tree{
 	public void insert(int n){if(root == null) root = new Node(n); else root.binInsert(n);}
 	public Node search(int n){if(root == null) return null; return root.binSearch(n);}
 	
-	public void delete(Node n){//still doesnt work
-
+	public void delete(Node n){//cant delete leaves
+		System.out.println(n.data);
+		if(n == null) return;
+		if(n.left == null && n.right == null){
+			n.data = -1;//not sure how to delete exactly
+			return;
+		}
 		Node temp = n;
+		Node last = temp;
 		if(temp.left != null){
 			temp = temp.left;
-			while(temp.right != null)
+			if(!temp.hasChildren()){
+				n.data = temp.data;
+				n.left = null;
+			}
+			System.out.println(temp == null);
+			while(temp.right != null){
+				last = temp;
 				temp = temp.right;
+			}
+			System.out.println(temp == null);
 			n.data = temp.data;
-			delete(temp);
+			if(temp.hasChildren())
+				delete(temp);
+			else
+				last.right = null;
 			return;
 		}
 		if(temp.right != null){
 			temp = temp.right;
-			while(temp.left != null)
+			if(!temp.hasChildren()){
+				n.data = temp.data;
+				n.right = null;
+			}
+			while(temp.left != null){
+				last = temp;
 				temp = temp.left;
+			}
 			n.data = temp.data;
-			delete(temp);
+			if(temp.hasChildren())
+				delete(temp);
+			else
+				last.left = null;
 			return;
 		}
 		
+	}
+
+	public String toString(){
+		return root.toString();
 	}
 }
